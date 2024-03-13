@@ -1,5 +1,6 @@
-package com.songify.song.error;
+package com.songify.song.infrastructure.controller.error;
 
+import com.songify.song.domain.model.SongNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
