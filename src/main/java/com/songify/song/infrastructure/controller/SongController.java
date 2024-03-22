@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -39,10 +40,10 @@ public class SongController {
 
     @GetMapping
     public ResponseEntity <SongsResponseDto> getSongs(@RequestParam(required = false) Integer limit){
-        Map<Integer, SongEntity> allSongs = songRetriever.findAll();
+        List<SongEntity> allSongs = songRetriever.findAll();
         if(limit != null){
-            Map<Integer, SongEntity> limitedMap = songRetriever.findAllLimitedBy(limit);
-            SongsResponseDto responseDto = new SongsResponseDto(limitedMap);
+            List<SongEntity> limited = songRetriever.findAllLimitedBy(limit);
+            SongsResponseDto responseDto = new SongsResponseDto(limited);
             return ResponseEntity.ok(responseDto);
         }
         SongsResponseDto responseDto = new SongsResponseDto(allSongs);
@@ -52,8 +53,8 @@ public class SongController {
     @GetMapping("/{id}")
     public ResponseEntity <SongResponseDto> getSongById(@PathVariable Integer id, @RequestHeader(required = false) String requestId){
         log.info("Header: " + requestId);
-        Map<Integer, SongEntity> allSongs = songRetriever.findAll();
-        if(!allSongs.containsKey(id)){
+        List<SongEntity> allSongs = songRetriever.findAll();
+        if(!allSongs.contains(id)){
             throw new SongNotFoundException("Song not found");
         }
         SongEntity song = allSongs.get(id);
@@ -73,26 +74,25 @@ public class SongController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<DeleteSongResponseDto>deleteSongById(@PathVariable @Valid Integer id){
-        Map<Integer, SongEntity> allSongs = songRetriever.findAll();
-        if(!allSongs.containsKey(id)){
+        List<SongEntity> allSongs = songRetriever.findAll();
+        if(!allSongs.contains(id)){
             throw new SongNotFoundException("Song not found");
         }
-        SongEntity removedSong = allSongs.remove(id);
+         allSongs.remove(id);
         log.info("Deleting song with id " + id);
-        log.info(removedSong + " has been removed");
         return ResponseEntity.ok(new DeleteSongResponseDto("You have deleted song with id " + id, HttpStatus.OK));
     }
     @PutMapping("/{id}")
     public ResponseEntity <UpdateSongResponseDto> replaceSong(@RequestBody @Valid UpdateSongRequestDto song,
                                                               @PathVariable Integer id){
-        Map<Integer, SongEntity> allSongs = songRetriever.findAll();
-        if(!allSongs.containsKey(id)){
+        List<SongEntity> allSongs = songRetriever.findAll();
+        if(!allSongs.contains(id)){
             throw new SongNotFoundException("Song not found");
         }
         String songName = song.songName();
         String artistName = song.artistName();
-        SongEntity oldSong = allSongs.put(id, new SongEntity(songName, artistName));
-        log.info(oldSong.name() + " has been replaced with " + songName);
+        SongEntity oldSong = songAdder.addSong(new SongEntity(songName, artistName));
+        log.info(oldSong.getName() + " has been replaced with " + songName);
         return ResponseEntity.ok(new UpdateSongResponseDto(new SongEntity(songName, artistName)));
     }
 //    @PatchMapping("/songs/{id}")

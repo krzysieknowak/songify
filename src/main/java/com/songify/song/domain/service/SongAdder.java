@@ -13,7 +13,7 @@ public class SongAdder {
     }
 
     public SongEntity addSong(SongEntity song) {
-        songRepository.saveToDatabase(song);
+        songRepository.save(song);
         return song;
     }
 }

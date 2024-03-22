@@ -1,9 +1,11 @@
 package com.songify.song.domain.service;
 
 import com.songify.song.domain.model.SongEntity;
+import com.songify.song.domain.repository.InMemorySongRepository;
 import com.songify.song.domain.repository.SongRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -16,14 +18,13 @@ public class SongRetriever {
         this.songRepository = songRepository;
     }
 
-    public Map<Integer, SongEntity> findAll(){
+    public List<SongEntity> findAll(){
         return songRepository.findAll();
     }
-    public Map<Integer, SongEntity> findAllLimitedBy(Integer limit) {
-        Map<Integer, SongEntity> allSongs = songRepository.findAll();
-        return allSongs.entrySet()
-                .stream()
+    public List<SongEntity> findAllLimitedBy(Integer limit) {
+        List<SongEntity> allSongs = songRepository.findAll();
+        return allSongs.stream()
                 .limit(limit)
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+                .toList();
     }
 }
