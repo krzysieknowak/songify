@@ -1,13 +1,12 @@
 package com.songify.song.domain.service;
 
 import com.songify.song.domain.model.SongEntity;
-import com.songify.song.domain.repository.InMemorySongRepository;
+import com.songify.song.domain.model.SongNotFoundException;
 import com.songify.song.domain.repository.SongRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
 public class SongRetriever {
@@ -26,5 +25,12 @@ public class SongRetriever {
         return allSongs.stream()
                 .limit(limit)
                 .toList();
+    }
+    public Optional<SongEntity> findSongById(Long id){
+        SongEntity song = songRepository.findById(id);
+        return Optional.ofNullable(song);
+    }
+    public void existsById(Long id){
+        findSongById(id).orElseThrow(()-> new SongNotFoundException("Song with " + id  + " not found"));
     }
 }

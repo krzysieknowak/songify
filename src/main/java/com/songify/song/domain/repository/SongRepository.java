@@ -10,4 +10,7 @@ public interface SongRepository extends Repository<SongEntity, Long> {
 
     List<SongEntity> findAll();
     SongEntity save(SongEntity song);
+    SongEntity findById(Long id);
+    void deleteById(Long id);
+
 }
