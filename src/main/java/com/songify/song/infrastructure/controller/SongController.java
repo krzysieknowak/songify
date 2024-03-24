@@ -3,6 +3,7 @@ package com.songify.song.infrastructure.controller;
 import com.songify.song.domain.service.SongAdder;
 import com.songify.song.domain.service.SongDeleter;
 import com.songify.song.domain.service.SongRetriever;
+import com.songify.song.domain.service.SongUpdater;
 import com.songify.song.infrastructure.controller.dto.request.UpdateSongRequestDto;
 import com.songify.song.infrastructure.controller.dto.response.DeleteSongResponseDto;
 import com.songify.song.infrastructure.controller.dto.response.SongResponseDto;
@@ -21,8 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-import static com.songify.song.domain.service.SongMapper.mapFromSongRequestDtoToSongEntity;
-import static com.songify.song.domain.service.SongMapper.mapFromSongToSongResponseDto;
+import static com.songify.song.domain.service.SongMapper.*;
 
 @RestController
 @Log4j2
@@ -33,6 +33,7 @@ public class SongController {
     private final SongAdder songAdder;
     private final SongRetriever songRetriever;
     private final SongDeleter songDeleter;
+    private final SongUpdater songUpdater;
 
 
 
@@ -71,17 +72,13 @@ public class SongController {
         return ResponseEntity.ok(new DeleteSongResponseDto("You have deleted song with id " + id, HttpStatus.OK));
     }
     @PutMapping("/{id}")
-    public ResponseEntity <UpdateSongResponseDto> replaceSong(@RequestBody @Valid UpdateSongRequestDto song,
-                                                              @PathVariable Integer id){
-        List<SongEntity> allSongs = songRetriever.findAll();
-        if(!allSongs.contains(id)){
-            throw new SongNotFoundException("Song not found");
-        }
-        String songName = song.songName();
-        String artistName = song.artistName();
-        SongEntity oldSong = songAdder.addSong(new SongEntity(songName, artistName));
-        log.info(oldSong.getName() + " has been replaced with " + songName);
-        return ResponseEntity.ok(new UpdateSongResponseDto(new SongEntity(songName, artistName)));
+    public ResponseEntity <UpdateSongResponseDto> replaceSong(@RequestBody @Valid UpdateSongRequestDto requestDto,
+                                                              @PathVariable Long id){
+        songRetriever.existsById(id);
+        SongEntity newSong = mapFromUpdateSongRequestDtoToSongEntity(requestDto);
+        songUpdater.updateSongById(id, newSong);
+        UpdateSongResponseDto responseDto = mapFromSongEntityToUpdateSongResponseDto(newSong);
+        return ResponseEntity.ok(responseDto);
     }
 //    @PatchMapping("/songs/{id}")
 //    public ResponseEntity <PartiallyUpdateSongResponseDto> patchSong(@RequestBody @Valid PartiallyUpdateSongRequestDto song,
