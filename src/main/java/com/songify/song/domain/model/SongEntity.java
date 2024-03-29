@@ -14,9 +14,9 @@ public class SongEntity {
     private Long id;
 
     @Column(nullable = false)
-    public String name;
+    String name;
     @Column(nullable = false)
-    public String artist;
+    String artist;
 
     public SongEntity() {
     }

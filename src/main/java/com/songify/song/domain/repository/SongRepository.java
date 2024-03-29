@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 public interface SongRepository extends Repository<SongEntity, Long> {
@@ -17,7 +16,7 @@ public interface SongRepository extends Repository<SongEntity, Long> {
     SongEntity save(SongEntity song);
 
     @Query("SELECT s FROM SongEntity s WHERE s.id=:id")
-    Optional<SongEntity> findById(Long id);
+    Optional<SongEntity> findById (Long id);
     @Query("DELETE FROM SongEntity s WHERE s.id=:id")
     void deleteById(Long id);
     @Modifying
