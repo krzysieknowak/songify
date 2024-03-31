@@ -17,6 +17,7 @@ public interface SongRepository extends Repository<SongEntity, Long> {
 
     @Query("SELECT s FROM SongEntity s WHERE s.id=:id")
     Optional<SongEntity> findById (Long id);
+    @Modifying
     @Query("DELETE FROM SongEntity s WHERE s.id=:id")
     void deleteById(Long id);
     @Modifying
