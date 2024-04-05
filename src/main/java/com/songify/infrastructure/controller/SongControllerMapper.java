@@ -1,6 +1,6 @@
 package com.songify.infrastructure.controller;
 
-import com.songify.domain.crud.song.dto.SongEntityDto;
+import com.songify.domain.crud.dto.SongEntityDto;
 import com.songify.infrastructure.controller.dto.response.*;
 import org.springframework.http.HttpStatus;
 

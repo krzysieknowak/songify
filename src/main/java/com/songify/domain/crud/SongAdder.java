@@ -1,6 +1,6 @@
-package com.songify.domain.crud.song;
+package com.songify.domain.crud;
 
-import com.songify.domain.crud.song.dto.SongEntityDto;
+import com.songify.domain.crud.dto.SongEntityDto;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 

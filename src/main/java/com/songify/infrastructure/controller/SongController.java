@@ -1,7 +1,7 @@
 package com.songify.infrastructure.controller;
 
-import com.songify.domain.crud.song.SongCrudFacade;
-import com.songify.domain.crud.song.dto.SongEntityDto;
+import com.songify.domain.crud.SongCrudFacade;
+import com.songify.domain.crud.dto.SongEntityDto;
 import com.songify.infrastructure.controller.dto.request.PartiallyUpdateSongRequestDto;
 import com.songify.infrastructure.controller.dto.request.SongRequestDto;
 import com.songify.infrastructure.controller.dto.request.UpdateSongRequestDto;
@@ -30,9 +30,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static com.songify.domain.crud.song.SongEntityDomainMapper.mapFromPartiallyUpdateSongRequestDtoToSongEntityDto;
-import static com.songify.domain.crud.song.SongEntityDomainMapper.mapFromSongRequestDtoToSongEntityDto;
-import static com.songify.domain.crud.song.SongEntityDomainMapper.mapFromUpdateSongRequestDtoToSongEntityDto;
+import static com.songify.domain.crud.SongEntityDomainMapper.mapFromPartiallyUpdateSongRequestDtoToSongEntityDto;
+import static com.songify.domain.crud.SongEntityDomainMapper.mapFromSongRequestDtoToSongEntityDto;
+import static com.songify.domain.crud.SongEntityDomainMapper.mapFromUpdateSongRequestDtoToSongEntityDto;
 import static com.songify.infrastructure.controller.SongControllerMapper.createDeleteSongResponseDto;
 import static com.songify.infrastructure.controller.SongControllerMapper.mapFromSongControllerDtoToSongResponseDto;
 import static com.songify.infrastructure.controller.SongControllerMapper.mapFromSongControllerDtoToPartiallyUpdateSongResponseDto;

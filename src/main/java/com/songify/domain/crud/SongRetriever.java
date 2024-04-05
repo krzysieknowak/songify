@@ -1,6 +1,5 @@
-package com.songify.domain.crud.song;
+package com.songify.domain.crud;
 
-import com.songify.domain.crud.song.dto.SongEntityDto;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 

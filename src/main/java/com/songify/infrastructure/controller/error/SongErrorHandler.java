@@ -1,6 +1,6 @@
 package com.songify.infrastructure.controller.error;
 
-import com.songify.domain.crud.song.SongNotFoundException;
+import com.songify.domain.crud.SongNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
