@@ -31,6 +31,8 @@ class SongEntity extends BaseEntity {
     private Long duration;
     @Enumerated(EnumType.STRING)
     private SongLanguage language;
+    @OneToOne(optional = false)
+    private Genre genre;
 
      SongEntity(String name, String artist) {
         this.name = name;

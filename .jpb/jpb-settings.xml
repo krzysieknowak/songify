@@ -4,6 +4,15 @@
   <component name="JpaLiquibaseChangesConfig">
     <exclude-change idName="song_id_seq" tagName="createSequence" />
     <exclude-change idName="song" tagName="createTable" />
+    <exclude-change idName="genre#name" tagName="dropNotNullConstraint" />
+    <exclude-change idName="album#id" tagName="addPrimaryKey" />
+    <exclude-change idName="album#title" tagName="dropNotNullConstraint" />
+    <exclude-change idName="genre_id_seq" tagName="createSequence" />
+    <exclude-change idName="artist_id_seq" tagName="createSequence" />
+    <exclude-change idName="album_id_seq" tagName="createSequence" />
+    <exclude-change idName="album#uuid" tagName="dropNotNullConstraint" />
+    <exclude-change idName="artist#uuid" tagName="dropNotNullConstraint" />
+    <exclude-change idName="genre#uuid" tagName="dropNotNullConstraint" />
   </component>
   <component name="PersistenceUnitSettings">
     <persistence-units>
