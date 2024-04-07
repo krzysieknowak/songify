@@ -1,6 +1,6 @@
 CREATE TABLE album
 (
-    id           BIGSERIAL NOT NULL,
+    id           BIGSERIAL PRIMARY KEY NOT NULL,
     title        VARCHAR(255) NOT NULL,
     release_date TIMESTAMP(6) WITH TIME ZONE
 );
