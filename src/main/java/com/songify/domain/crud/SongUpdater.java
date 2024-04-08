@@ -23,22 +23,22 @@ class SongUpdater {
         songRepository.updateById(id, newSong);
     }
 
-     SongEntity updateSongPartiallyById(Long id, SongEntity requestSong) {
-        SongEntity songFromDatabase = songRetriever.findSongById(id);
-        SongEntity.SongEntityBuilder builder = SongEntity.builder();
-        if(requestSong.getName() != null) {
-            builder.name(requestSong.getName());
-        }else {
-            builder.name(songFromDatabase.getName());
-        }
-        if(requestSong.getArtist() != null){
-            builder.artist(requestSong.getArtist());
-        }else
-            builder.artist(songFromDatabase.getArtist());
-        SongEntity toSaveSong = builder.build();
-        updateSongById(id,toSaveSong);
-        return toSaveSong;
-    }
+//     SongEntity updateSongPartiallyById(Long id, SongEntity requestSong) {
+//        SongEntity songFromDatabase = songRetriever.findSongById(id);
+//        SongEntity.SongEntityBuilder builder = SongEntity.builder();
+//        if(requestSong.getName() != null) {
+//            builder.name(requestSong.getName());
+//        }else {
+//            builder.name(songFromDatabase.getName());
+//        }
+//        if(requestSong.getArtist() != null){
+//            builder.artist(requestSong.getArtist());
+//        }else
+//            builder.artist(songFromDatabase.getArtist());
+//        SongEntity toSaveSong = builder.build();
+//        updateSongById(id,toSaveSong);
+//        return toSaveSong;
+//    }
 //     SongEntity updateSongPartiallyById(Long id, SongEntity requestSong) {
 //        SongEntity toUpdateSong = songRetriever.findSongById(id);
 //        if(requestSong.getName() != null) {

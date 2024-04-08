@@ -1,5 +1,7 @@
 package com.songify.domain.crud;
 
+import com.songify.domain.crud.dto.ArtistDto;
+import com.songify.domain.crud.dto.ArtistRequestDto;
 import com.songify.domain.crud.dto.SongEntityDto;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -9,11 +11,17 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class SongCrudFacade {
+public class SongifyCrudFacade {
     private final SongAdder songAdder;
     private final SongRetriever songRetriever;
     private final SongDeleter songDeleter;
     private final SongUpdater songUpdater;
+    private final ArtistAdder artistAdder;
+
+    public ArtistDto addArtist(ArtistRequestDto request){
+        return artistAdder.addArtist(request.name());
+
+    }
 
     public List<SongEntityDto> findAll(final Pageable pageable) {
         return songRetriever.findAll(pageable)
@@ -21,7 +29,6 @@ public class SongCrudFacade {
                 .map(songEntity -> SongEntityDto.builder()
                         .id(songEntity.getId())
                         .name(songEntity.getName())
-                        .artist(songEntity.getArtist())
                         .build())
                 .toList();
     }
@@ -31,7 +38,6 @@ public class SongCrudFacade {
         SongEntityDto songEntityDto = SongEntityDto.builder()
                 .id(song.getId())
                 .name(song.getName())
-                .artist(song.getArtist())
                 .build();
         return songEntityDto;
     }
@@ -40,7 +46,6 @@ public class SongCrudFacade {
         SongEntity songEntity = songAdder.addSong(song);
         return SongEntityDto.builder()
                 .name(songEntity.getName())
-                .artist(songEntity.getArtist())
                 .build();
     }
 
@@ -51,16 +56,16 @@ public class SongCrudFacade {
     public void updateSongById(final Long id, final SongEntityDto song) {
         SongEntity songEntity = SongEntity.builder()
                 .name(song.name())
-                .artist(song.artist())
                 .build();
         songUpdater.updateSongById(id, songEntity);
     }
-
-    public void updateSongPartiallyById(final Long id, final SongEntityDto song) {
-        SongEntity songEntityToUpdate = SongEntity.builder()
-                .name(song.name())
-                .artist(song.artist())
-                .build();
-        songUpdater.updateSongPartiallyById(id, songEntityToUpdate);
-    }
 }
+
+//    public void updateSongPartiallyById(final Long id, final SongEntityDto song) {
+//        SongEntity songEntityToUpdate = SongEntity.builder()
+//                .name(song.name())
+//
+//                .build();
+//        songUpdater.updateSongPartiallyById(id, songEntityToUpdate);
+//    }
+//}

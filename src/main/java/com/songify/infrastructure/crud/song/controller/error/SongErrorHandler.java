@@ -1,4 +1,4 @@
-package com.songify.infrastructure.controller.error;
+package com.songify.infrastructure.crud.song.controller.error;
 
 import com.songify.domain.crud.SongNotFoundException;
 import org.springframework.http.HttpStatus;

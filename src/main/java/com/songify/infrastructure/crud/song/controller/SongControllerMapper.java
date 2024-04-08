@@ -1,7 +1,12 @@
-package com.songify.infrastructure.controller;
+package com.songify.infrastructure.crud.song.controller;
 
 import com.songify.domain.crud.dto.SongEntityDto;
-import com.songify.infrastructure.controller.dto.response.*;
+import com.songify.infrastructure.crud.song.controller.dto.response.DeleteSongResponseDto;
+import com.songify.infrastructure.crud.song.controller.dto.response.PartiallyUpdateSongResponseDto;
+import com.songify.infrastructure.crud.song.controller.dto.response.SongControllerDto;
+import com.songify.infrastructure.crud.song.controller.dto.response.SongResponseDto;
+import com.songify.infrastructure.crud.song.controller.dto.response.SongsResponseDto;
+import com.songify.infrastructure.crud.song.controller.dto.response.UpdateSongResponseDto;
 import org.springframework.http.HttpStatus;
 
 

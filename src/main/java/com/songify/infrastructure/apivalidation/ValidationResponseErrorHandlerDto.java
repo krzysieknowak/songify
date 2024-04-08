@@ -1,4 +1,4 @@
-package com.songify.infrastructure.controller.apivalidation;
+package com.songify.infrastructure.apivalidation;
 
 import org.springframework.http.HttpStatus;
 

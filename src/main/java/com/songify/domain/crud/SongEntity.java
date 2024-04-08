@@ -24,9 +24,6 @@ class SongEntity extends BaseEntity {
 
     @Column(nullable = false)
     private String name;
-    @Column(nullable = false)
-    private String artist;
-
     private Instant releaseDate;
     private Long duration;
     @Enumerated(EnumType.STRING)

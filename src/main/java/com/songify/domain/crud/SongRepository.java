@@ -8,7 +8,7 @@ import org.springframework.data.repository.Repository;
 import java.util.List;
 import java.util.Optional;
 
-public interface SongRepository extends Repository<SongEntity, Long> {
+interface SongRepository extends Repository<SongEntity, Long> {
 
     @Query("SELECT s FROM SongEntity s")
     List<SongEntity> findAll(Pageable pageable);
@@ -20,7 +20,7 @@ public interface SongRepository extends Repository<SongEntity, Long> {
     @Query("DELETE FROM SongEntity s WHERE s.id=:id")
     void deleteById(Long id);
     @Modifying
-    @Query("UPDATE SongEntity s SET s.name = :#{#song.name}, s.artist = :#{#song.artist} WHERE s.id = :id")
+    @Query("UPDATE SongEntity s SET s.name = :#{#song.name} WHERE s.id = :id")
     void updateById(Long id, SongEntity song);
 
 }
