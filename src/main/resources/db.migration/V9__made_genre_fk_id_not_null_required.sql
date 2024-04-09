@@ -1,2 +1,0 @@
-ALTER TABLE song
-    ALTER COLUMN genre_id SET NOT NULL;

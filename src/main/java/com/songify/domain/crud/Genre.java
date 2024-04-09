@@ -25,4 +25,8 @@ class Genre extends BaseEntity {
             allocationSize = 1)
     private Long id;
     private String name;
+
+    public Genre(String name){
+        this.name = name;
+    }
 }

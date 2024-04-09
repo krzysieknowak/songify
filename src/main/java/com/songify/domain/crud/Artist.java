@@ -13,6 +13,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -20,7 +21,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter(AccessLevel.PACKAGE)
 @Setter(AccessLevel.PACKAGE)
-public class Artist extends BaseEntity {
+class Artist extends BaseEntity {
     @Id
     @GeneratedValue(generator = "artist_id_seq",strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(

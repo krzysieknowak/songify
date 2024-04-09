@@ -35,8 +35,17 @@ class Album extends BaseEntity  {
 
     @OneToMany
     @JoinColumn(name = "album_id")
-    private Set<SongEntity> songs = new HashSet<>();
+    private Set<Song> songs = new HashSet<>();
 
     @ManyToMany(mappedBy = "albums")
     private Set<Artist> artists = new HashSet<>();
+
+    public Album(String title, Instant releaseDate){
+        this.title = title;
+        this.releaseDate = releaseDate;
+    }
+
+    void addSong(final Song songById) {
+        songs.add(songById);
+    }
 }

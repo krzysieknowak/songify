@@ -14,10 +14,10 @@ class SongRetriever {
         this.songRepository = songRepository;
     }
 
-     List<SongEntity> findAll(Pageable pageable){
+     List<Song> findAll(Pageable pageable){
         return songRepository.findAll(pageable);
     }
-     SongEntity findSongById(Long id){
+     Song findSongById(Long id){
         return songRepository.findById(id).
                 orElseThrow(()-> new SongNotFoundException("Song with " + id  + " not found"));
 

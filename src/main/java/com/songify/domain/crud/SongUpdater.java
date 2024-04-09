@@ -18,7 +18,7 @@ class SongUpdater {
     }
 
 
-     void updateSongById(Long id, SongEntity newSong) {
+     void updateSongById(Long id, Song newSong) {
         songRepository.findById(id);
         songRepository.updateById(id, newSong);
     }

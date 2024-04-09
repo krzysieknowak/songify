@@ -1,8 +1,8 @@
 package com.songify.infrastructure.crud.song.controller;
 
 import com.songify.domain.crud.SongifyCrudFacade;
-import com.songify.domain.crud.dto.SongEntityDto;
-import com.songify.infrastructure.crud.song.controller.dto.request.SongRequestDto;
+import com.songify.domain.crud.dto.SongDto;
+import com.songify.domain.crud.dto.SongRequestDto;
 import com.songify.infrastructure.crud.song.controller.dto.request.UpdateSongRequestDto;
 import com.songify.infrastructure.crud.song.controller.dto.response.DeleteSongResponseDto;
 import com.songify.infrastructure.crud.song.controller.dto.response.SongControllerDto;
@@ -27,8 +27,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static com.songify.domain.crud.SongEntityDomainMapper.mapFromSongRequestDtoToSongEntityDto;
+import static com.songify.domain.crud.SongEntityDomainMapper.mapFromSongRequestDtoToSongDto;
 import static com.songify.domain.crud.SongEntityDomainMapper.mapFromUpdateSongRequestDtoToSongEntityDto;
+import static com.songify.infrastructure.crud.song.controller.SongControllerMapper.mapFromSongControllerDtoToSongResponseDto;
 
 @RestController
 @Log4j2
@@ -40,7 +41,7 @@ public class SongController {
 
     @GetMapping
     public ResponseEntity<SongsResponseDto> getSongs(@PageableDefault(page = 0, size = 10) Pageable pageable) {
-        List<SongEntityDto> allSongs = songCrudFacade.findAll(pageable);
+        List<SongDto> allSongs = songCrudFacade.findAll(pageable);
         SongsResponseDto songsResponseDto = SongControllerMapper.mapFromSongsToSongsResponseDto(allSongs);
         return ResponseEntity.ok(songsResponseDto);
     }
@@ -48,24 +49,23 @@ public class SongController {
     @GetMapping("/{id}")
     public ResponseEntity<SongResponseDto> getSongById(@PathVariable Long id, @RequestHeader(required = false) String requestId) {
         log.info("Header: " + requestId);
-        SongEntityDto song = songCrudFacade.findSongById(id);
+        SongDto song = songCrudFacade.findSongById(id);
         SongResponseDto songResponseDto = SongControllerMapper.mapFromSongEntityDtoToSongResponseDto(song);
         return ResponseEntity.ok(songResponseDto);
     }
 
     @PostMapping
     public ResponseEntity<SongResponseDto> postSong(@RequestBody @Valid SongRequestDto request) {
-        SongEntityDto song = mapFromSongRequestDtoToSongEntityDto(request);
-        SongEntityDto savedSong = songCrudFacade.addSong(song);
-        SongControllerDto savedSongDto = mapFromSongEntityDtoToSongControllerDto(savedSong);
-        SongResponseDto response = SongControllerMapper.mapFromSongControllerDtoToSongResponseDto(savedSongDto);
+        SongDto savedSong = songCrudFacade.addSong(request);
+        SongControllerDto savedSongDto = mapFromSongDtoToSongControllerDto(savedSong);
+        SongResponseDto response = mapFromSongControllerDtoToSongResponseDto(savedSongDto);
         return ResponseEntity.ok(response);
     }
 
-    private SongControllerDto mapFromSongEntityDtoToSongControllerDto(final SongEntityDto songEntityDto) {
+    private SongControllerDto mapFromSongDtoToSongControllerDto(final SongDto songDto) {
         return SongControllerDto.builder()
-                .name(songEntityDto.name())
-                .artist(songEntityDto.artist())
+                .id(songDto.id())
+                .name(songDto.name())
                 .build();
     }
 
@@ -79,7 +79,7 @@ public class SongController {
     @PutMapping("/{id}")
     public ResponseEntity<UpdateSongResponseDto> replaceSong(@RequestBody @Valid UpdateSongRequestDto requestDto,
                                                              @PathVariable Long id) {
-        SongEntityDto newSong = mapFromUpdateSongRequestDtoToSongEntityDto(requestDto);
+        SongDto newSong = mapFromUpdateSongRequestDtoToSongEntityDto(requestDto);
         songCrudFacade.updateSongById(id, newSong);
         UpdateSongResponseDto responseDto = SongControllerMapper.mapFromSongEntityDtoToUpdateSongResponseDto(newSong);
         return ResponseEntity.ok(responseDto);

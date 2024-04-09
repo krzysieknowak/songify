@@ -13,7 +13,7 @@ import java.time.Instant;
 @Table(name = "song")
 @NoArgsConstructor
 @AllArgsConstructor
-class SongEntity extends BaseEntity {
+class Song extends BaseEntity {
     @Id
     @GeneratedValue(generator = "song_id_seq",strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(
