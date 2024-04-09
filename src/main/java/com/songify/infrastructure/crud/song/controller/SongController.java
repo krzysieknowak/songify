@@ -27,9 +27,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static com.songify.domain.crud.SongEntityDomainMapper.mapFromSongRequestDtoToSongDto;
 import static com.songify.domain.crud.SongEntityDomainMapper.mapFromUpdateSongRequestDtoToSongEntityDto;
 import static com.songify.infrastructure.crud.song.controller.SongControllerMapper.mapFromSongControllerDtoToSongResponseDto;
+import static com.songify.infrastructure.crud.song.controller.SongControllerMapper.mapFromSongDtoToSongControllerDto;
+import static com.songify.infrastructure.crud.song.controller.SongControllerMapper.mapFromSongDtoToSongResponseDto;
+import static com.songify.infrastructure.crud.song.controller.SongControllerMapper.mapFromSongsToSongsResponseDto;
 
 @RestController
 @Log4j2
@@ -41,8 +43,8 @@ public class SongController {
 
     @GetMapping
     public ResponseEntity<SongsResponseDto> getSongs(@PageableDefault(page = 0, size = 10) Pageable pageable) {
-        List<SongDto> allSongs = songCrudFacade.findAll(pageable);
-        SongsResponseDto songsResponseDto = SongControllerMapper.mapFromSongsToSongsResponseDto(allSongs);
+        List<SongDto> allSongs = songCrudFacade.findAllSongs(pageable);
+        SongsResponseDto songsResponseDto = mapFromSongsToSongsResponseDto(allSongs);
         return ResponseEntity.ok(songsResponseDto);
     }
 
@@ -50,7 +52,7 @@ public class SongController {
     public ResponseEntity<SongResponseDto> getSongById(@PathVariable Long id, @RequestHeader(required = false) String requestId) {
         log.info("Header: " + requestId);
         SongDto song = songCrudFacade.findSongById(id);
-        SongResponseDto songResponseDto = SongControllerMapper.mapFromSongEntityDtoToSongResponseDto(song);
+        SongResponseDto songResponseDto = mapFromSongDtoToSongResponseDto(song);
         return ResponseEntity.ok(songResponseDto);
     }
 
@@ -60,13 +62,6 @@ public class SongController {
         SongControllerDto savedSongDto = mapFromSongDtoToSongControllerDto(savedSong);
         SongResponseDto response = mapFromSongControllerDtoToSongResponseDto(savedSongDto);
         return ResponseEntity.ok(response);
-    }
-
-    private SongControllerDto mapFromSongDtoToSongControllerDto(final SongDto songDto) {
-        return SongControllerDto.builder()
-                .id(songDto.id())
-                .name(songDto.name())
-                .build();
     }
 
     @DeleteMapping("/{id}")

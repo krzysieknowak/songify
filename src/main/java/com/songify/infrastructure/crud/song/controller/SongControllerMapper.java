@@ -18,20 +18,30 @@ public class SongControllerMapper {
                 .map(songEntityDto -> SongControllerDto.builder()
                         .id(songEntityDto.id())
                         .name(songEntityDto.name())
+                        .releaseDate(songEntityDto.releaseDate())
+                        .duration(songEntityDto.duration())
                         .build())
                 .toList();
         return new SongsResponseDto(songControllerDtos);
     }
-    public static SongResponseDto mapFromSongEntityDtoToSongResponseDto(final SongDto song) {
+    public static SongResponseDto mapFromSongDtoToSongResponseDto(final SongDto song) {
         SongControllerDto songControllerDto = SongControllerDto.builder()
                 .id(song.id())
                 .name(song.name())
+                .releaseDate(song.releaseDate())
+                .duration(song.duration())
                 .build();
         return new SongResponseDto(songControllerDto);
     }
 
     public static SongResponseDto mapFromSongControllerDtoToSongResponseDto(SongControllerDto song) {
         return new SongResponseDto(song);
+    }
+    public static SongControllerDto mapFromSongDtoToSongControllerDto(final SongDto songDto) {
+        return SongControllerDto.builder()
+                .id(songDto.id())
+                .name(songDto.name())
+                .build();
     }
     public static UpdateSongResponseDto mapFromSongEntityDtoToUpdateSongResponseDto(SongDto song) {
         SongControllerDto songControllerDto = SongControllerDto.builder()
